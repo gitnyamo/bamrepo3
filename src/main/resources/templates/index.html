@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome to BAM User Application</title>
+    <!-- Add Thymeleaf URL before including the Bootstrap stylesheet -->
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+</head>
+<body>
+<div class="container-fluid text-center">
+    <h1>Welcome to BAM User Application!!!</h1>
+
+    <!-- Thymeleaf expression for dynamic content -->
+    <p th:text="${'Today is ' + #temporals.format(#temporals.createNow(), 'dd-MM-yyyy')}"></p>
+
+    <!-- Bootstrap button -->
+    <button type="button" class="btn btn-primary">Click me</button>
+    <a class="h2" th:href="@{/users}">Manager Users</a>
+</div>
+</body>
+</html>
