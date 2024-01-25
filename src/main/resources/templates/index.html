@@ -4,19 +4,43 @@
     <meta charset="UTF-8">
     <title>Welcome to BAM User Application</title>
     <!-- Add Thymeleaf URL before including the Bootstrap stylesheet -->
-    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css}" />
+
+    <style>
+        /* Add celebratory splash animation here */
+        @keyframes splashAnimation {
+            0% { transform: scale(1); opacity: 0; }
+            50% { transform: scale(2); opacity: 1; }
+            100% { transform: scale(1); opacity: 0; }
+        }
+
+        .splash-text {
+            animation: splashAnimation 2s ease-out infinite; /* Adjust the duration and style as needed */
+        }
+    </style>
 </head>
 <body>
 <div class="container-fluid text-center">
-    <h1>Welcome to BAM User Application!!!</h1>
+    <h1 id="splashText" class="splash-text">Welcome to BAM User Application!!!</h1>
     <!-- Thymeleaf expression for dynamic content -->
     <p th:text="${'Today is ' + #temporals.format(#temporals.createNow(), 'dd-MM-yyyy')}" style="background-color: green;"></p>
     <!-- Bootstrap button -->
     <div class="container-fluid text-center">
-        <a th:href="@{/users}">
+        <a th:href="@{/users}" onclick="startSplash();">
             <button type="button" class="btn btn-primary">Manager Users</button>
         </a>
     </div>
 </div>
+
+<script>
+    // JavaScript to control the splash animation
+    function startSplash() {
+        document.getElementById("splashText").classList.add("splash-text");
+    }
+
+    function stopSplash() {
+        document.getElementById("splashText").classList.remove("splash-text");
+    }
+</script>
 </body>
 </html>
