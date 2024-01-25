@@ -9,13 +9,14 @@
 <body>
 <div class="container-fluid text-center">
     <h1>Welcome to BAM User Application!!!</h1>
-
     <!-- Thymeleaf expression for dynamic content -->
-    <p th:text="${'Today is ' + #temporals.format(#temporals.createNow(), 'dd-MM-yyyy')}"></p>
-
+    <p th:text="${'Today is ' + #temporals.format(#temporals.createNow(), 'dd-MM-yyyy')}" style="background-color: green;"></p>
     <!-- Bootstrap button -->
-    <button type="button" class="btn btn-primary">Click me</button>
-    <a class="h2" th:href="@{/users}">Manager Users</a>
+    <div class="container-fluid text-center">
+        <a th:href="@{/users}">
+            <button type="button" class="btn btn-primary">Manager Users</button>
+        </a>
+    </div>
 </div>
 </body>
 </html>
