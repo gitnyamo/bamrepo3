@@ -21,7 +21,7 @@
 </head>
 <body>
 <div class="container-fluid text-center">
-    <h1 id="splashText" class="splash-text">Welcome to BAM User Application!!!</h1>
+    <h1 style="color: purple" id="splashText" class="splash-text">Welcome to BAM User Application!!!</h1>
     <!-- Thymeleaf expression for dynamic content -->
     <p th:text="${'Today is ' + #temporals.format(#temporals.createNow(), 'dd-MM-yyyy')}" style="background-color: green;"></p>
     <!-- Bootstrap button -->
@@ -44,4 +44,3 @@
 </script>
 </body>
 </html>
-
