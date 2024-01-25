@@ -1,10 +1,102 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Manage Users</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
 </head>
 <body>
+<div class="container-fluid text-center">
+    <div style="background-color: lightblue; padding: 10px;">
+        <h2 style="color: white;">Manage Users</h2>
+    </div>
 
+    <div id="userPrompt" class="m-2">
+        <!-- Dynamic content to be added here if and when needed -->
+    </div>
+
+    <div>
+        <div class="m-2">
+            <span style="color: red;">Need to add a new user?</span> Click <span style="color: red;"><a id="addUserLink" href="#">add new User</a></span> to add one.
+            <span>&nbsp;</span> <!-- space added between "else" -->
+            <span>&nbsp;</span>
+            Else need to <span style="color: green;">retrieve a list of users?</span> Click <span style="color: green;"><a id="listUserLink" href="#">retrieve users</a></span> to retrieve.
+        </div>
+
+        <div class="m-2" id="addUserContainer" style="display: none;">
+            <form th:action="@{/users/new}" method="post" onsubmit="encryptPassword()">
+                <input type="text" id="email" name="email" placeholder="Email">
+                <input type="text" id="username" name="username" placeholder="Username">
+                <input type="password" id="password" name="password" placeholder="Password">
+                <input type="text" id="firstName" name="firstName" placeholder="First Name">
+                <input type="text" id="lastName" name="lastName" placeholder="Last Name">
+                <input type="checkbox" id="enabled" name="enabled"> Enabled
+                <button id="addUserButton" type="submit" style="background-color: blue; color: white; padding: 10px 20px; border: none; cursor: pointer; text-decoration: none;">
+                    Add New User
+                </button>
+            </form>
+        </div>
+
+        <div class="m-2" id="listUserContainer" style="display: none;">
+            <table class="table table-bordered">
+                <thead class="thead-dark" style="background-color: blue;">
+                <tr>
+                    <th style="background-color: lightcyan; color: purple;">ID</th>
+                    <th style="background-color: lightskyblue; color: purple;">E-mail</th>
+                    <th style="background-color: lightskyblue; color: purple;">Username</th>
+                    <th style="background-color: lightskyblue; color: purple;">Password</th>
+                    <th style="background-color: lightblue; color: purple;">First Name</th>
+                    <th style="background-color: lightgreen; color: purple;">Last Name</th>
+                    <th style="background-color: lightcyan; color: purple;">Enabled</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <th:block th:if="${users != null and users.size() > 0}" th:each="user : ${users}">
+                    <tr>
+                        <td>[[${user.id}]]</td>
+                        <td>[[${user.email}]]</td>
+                        <td>[[${user.username}]]</td>
+                        <td>[[${user.password}]]</td>
+                        <td>[[${user.firstName}]]</td>
+                        <td>[[${user.lastName}]]</td>
+                        <td>[[${user.enabled}]]</td>
+                        <td>
+                            <a class="h4 mr-3" th:href="@{'/users/edit/' + ${user.id}}">Edit</a>
+                            <a class="h4 " th:href="@{'/users/delete/' + ${user.id}}">Delete</a>
+                        </td>
+                    </tr>
+                </th:block>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    function encryptPassword() {
+        // Get the password input field
+        var passwordInput = document.getElementById("password");
+
+        // Encrypt the password using your encryption algorithm
+        // For this purposes, we can use a simple encryption method
+        var encryptedPassword = "encryptedWith" + passwordInput.value;
+
+        // Set the encrypted password back to the input field
+        passwordInput.value = encryptedPassword;
+    }
+
+    document.getElementById("addUserLink").addEventListener("click", function(event) {
+        event.preventDefault(); // Prevent the default behavior of the link
+        const addUserContainer = document.getElementById("addUserContainer");
+        addUserContainer.style.display = (addUserContainer.style.display === "none") ? "block" : "none"; // Toggle display
+    });
+
+    document.getElementById("listUserLink").addEventListener("click", function(event) {
+        event.preventDefault(); // Prevent the default behavior of the link
+        const listUserContainer = document.getElementById("listUserContainer");
+        listUserContainer.style.display = (listUserContainer.style.display === "none") ? "block" : "none"; // Toggle display
+    });
+</script>
 </body>
 </html>

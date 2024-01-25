@@ -34,4 +34,21 @@ public class UserService {
         }
         throw new UserNotFoundException("Could not find any user with ID "+ id);
     }
+     public void delete(Integer id){
+        Long count = userRepository.countById(id);
+        if(count == null || count == 0) {
+            throw  new UserNotFoundException("Could not find any user(s) with that ID "+id);
+        }
+        userRepository.deleteById(id);
+     }
+    public void update(User user) {
+        Integer id = user.getId();
+        if (id == null) {
+            throw new IllegalArgumentException("User ID cannot be null");
+        }
+        if (!userRepository.existsById(id)) {
+            throw new UserNotFoundException("User with ID " + id + " does not exist");
+        }
+        userRepository.save(user);
+    }
 }
