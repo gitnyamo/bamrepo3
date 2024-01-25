@@ -11,44 +11,30 @@ import java.util.Optional;
 
 @Service
 public class UserService {
-
     @Autowired
     private UserRepository userRepository;
-
-    public List<User> listAllUsers(){
-        return userRepository.findAll();
-
+    public List<User> listAll(){
+        return (List<User>) userRepository.findAll();
     }
 
-    public void save(User user){
+    public void save(User user) {
         userRepository.save(user);
     }
 
-    public User getUserById(Integer id){
-        if(id == null){
-            throw new IllegalArgumentException("ID cannot be null");
+    public User get(Integer id) throws UserNotFoundException {
+        Optional<User> result = userRepository.findById(id);
+        if(result.isPresent()) {
+            return  result.get();
         }
-        Optional<User> userResult = userRepository.findById(id);
-        if(userResult.isPresent()) {
-            return userResult.get();
-        }
-        throw new UserNotFoundException("Could not find any user with ID "+ id);
+        throw new UserNotFoundException("Could not find any users with ID" + id);
+
     }
-     public void delete(Integer id){
+
+    public void delete(Integer id) throws UserNotFoundException {
         Long count = userRepository.countById(id);
         if(count == null || count == 0) {
-            throw  new UserNotFoundException("Could not find any user(s) with that ID "+id);
+            throw new UserNotFoundException("Could not find any users with ID " + id);
         }
         userRepository.deleteById(id);
-     }
-    public void update(User user) {
-        Integer id = user.getId();
-        if (id == null) {
-            throw new IllegalArgumentException("User ID cannot be null");
-        }
-        if (!userRepository.existsById(id)) {
-            throw new UserNotFoundException("User with ID " + id + " does not exist");
-        }
-        userRepository.save(user);
     }
 }
