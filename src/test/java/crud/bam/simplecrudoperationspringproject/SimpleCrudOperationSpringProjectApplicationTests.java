@@ -10,4 +10,5 @@ class SimpleCrudOperationSpringProjectApplicationTests {
     void contextLoads() {
     }
 
+
 }

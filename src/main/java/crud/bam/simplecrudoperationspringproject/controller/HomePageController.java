@@ -11,3 +11,4 @@ public class HomePageController {
         return "index";//Note: We need to  create the index html file to return this logical view name
     }
 }
+
